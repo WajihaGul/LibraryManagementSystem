@@ -12,7 +12,7 @@ namespace LibraryManagementSystem.Entities
         public int UserID { get; set; }
         [Required]
         public int BorrowID { get; set; }
-               
+        [Column(TypeName = "decimal(10,2)")]
         public decimal FineAmount { get; set; }
         public bool IsPaid { get; set; } = false;
         public DateTime? PaidAt { get; set; }
@@ -23,7 +23,5 @@ namespace LibraryManagementSystem.Entities
 
         [ForeignKey("BorrowID")]
         public BorrowRecord BorrowRecord { get; set; }
-
-       
     }
 }
