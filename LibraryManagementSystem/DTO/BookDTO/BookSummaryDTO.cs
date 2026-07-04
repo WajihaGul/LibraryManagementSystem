@@ -4,7 +4,7 @@
     {
         public int BookId { get; set; }
         public string BookTitle { get; set; } = string.Empty;
-        // no AuthorName — you're already inside the author!
+        
         public string PublisherName { get; set; } = string.Empty;
         public int PublishedYear { get; set; }
         public string Genre { get; set; } = string.Empty;

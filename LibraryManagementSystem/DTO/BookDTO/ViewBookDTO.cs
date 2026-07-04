@@ -12,7 +12,7 @@ namespace LibraryManagementSystem.DTO.BookDTO
         public string AuthorName { get; set; }
         public string PublisherName { get; set; }
         public int PublishedYear { get; set; }
-        public string Genre { get; set; }
+        public Genre Genre { get; set; }
         public int TotalCopies { get; set; }
         public int AvailableBooks { get; set; }
 

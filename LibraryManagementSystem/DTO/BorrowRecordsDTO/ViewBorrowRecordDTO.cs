@@ -12,7 +12,7 @@ namespace LibraryManagementSystem.DTO.BorrowRecordsDTO
         public DateTime BorrowedAt { get; set; } = DateTime.Now;
         public DateTime DueDate { get; set; }
         public DateTime? ReturnedAt { get; set; }
-        public string BorrowStatus { get; set; }
+        public BorrowStatus Status { get; set; }
         public decimal FinePenaltyAmount { get; set; }
         
     }

@@ -2,11 +2,11 @@
 
 namespace LibraryManagementSystem.DTO.AuthorDTO
 {
-    public class ViewAuthoDTO
+    public class ViewAuthorDTO
     {
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }
         public string? AuthorBio { get; set; }
-        public List<ViewBookDTO> Books { get; set; } = new List<ViewBookDTO>();
+        public List<BookSummaryDTO> Books { get; set; } = new List<BookSummaryDTO>();
     }
 }
