@@ -15,23 +15,19 @@ namespace LibraryManagementSystem.Controllers
     [ApiController]
     [Authorize]
     
-    public class BorrowRecordsController : ControllerBase
+    public class BorrowRecordsController : LibraryUserController
     {
         private readonly ApplicationDBContext applicationDBContext;
         public BorrowRecordsController(ApplicationDBContext applicationDBContext) { 
             this.applicationDBContext = applicationDBContext;
         }
 
-        private int GetLoggedInUserId()
-        {
-            return int.Parse(User.FindFirst("UserID")!.Value);
-        }
-      
+         
         [HttpGet]
         public IActionResult GetAllBorrowerRecords()
         {
-            var data = applicationDBContext.BorrowRecords.
-                Include(a=> a.Book)
+            var data = applicationDBContext.BorrowRecords
+                .Include(a=> a.Book)
                 .Include(a=>a.User)
                 .Include(a=>a.FinePenalty)
                 .Select(a=>new ViewBorrowRecordDTO
@@ -55,8 +51,8 @@ namespace LibraryManagementSystem.Controllers
         [Route("{id:int}")]
         public IActionResult GetAllBorrowerRecordsByID(int id)
         {
-            var data = applicationDBContext.BorrowRecords.
-                Include(a => a.Book)
+            var data = applicationDBContext.BorrowRecords
+                .Include(a => a.Book)
                 .Include(a => a.User)
                 .Include(a => a.FinePenalty)
                 .Where(a=>a.BorrowID == id)
@@ -84,14 +80,14 @@ namespace LibraryManagementSystem.Controllers
         [HttpPost]
         public IActionResult AddBorrowerRecords(AddBorrowRecordDTO addBorrowRecordDTO)
         {
-            var bookExistence = applicationDBContext.Books.Find(addBorrowRecordDTO.BookID);
+            var bookData = applicationDBContext.Books.Find(addBorrowRecordDTO.BookID);
 
-            if (bookExistence == null) {
+            if (bookData == null) {
                 return NotFound("Book Not Found");
             }
 
 
-            if (bookExistence.AvailableBooks <= 0)
+            if (bookData.AvailableBooks <= 0)
             {
                 return NotFound("Book Not Available");
             }
@@ -112,7 +108,7 @@ namespace LibraryManagementSystem.Controllers
                 Status = BorrowStatus.Borrowed
             };
 
-            bookExistence.AvailableBooks--;
+            bookData.AvailableBooks--;
 
             applicationDBContext.BorrowRecords.Add(data);
             applicationDBContext.SaveChanges();
@@ -138,22 +134,6 @@ namespace LibraryManagementSystem.Controllers
 
             data.ReturnedAt = DateTime.Now;
             data.Status = BorrowStatus.Returned;
-
-            if (data.DueDate < DateTime.Now)
-            {
-                var fineTillNow = (DateTime.Now - data.DueDate).Days * 10;
-                
-                var fine = new FinePenalty
-                {
-                    BorrowID = data.BorrowID,
-                    FineAmount = fineTillNow,
-                    IsPaid = false,
-                    PaidAt = null,
-                    IssuedAt = DateTime.Now,
-                    UserID =  data.UserID
-                };
-                applicationDBContext.FinePenalties.Add(fine);
-            }
 
             var book = applicationDBContext.Books.Find(data.BookID);
             

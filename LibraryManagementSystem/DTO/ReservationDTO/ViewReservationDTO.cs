@@ -13,6 +13,6 @@ namespace LibraryManagementSystem.DTO.ReservationDTO
         public string BookTitle { get; set; } = string.Empty;
         public DateTime ReservedAt { get; set; }
         public DateTime ExpiresAt { get; set; }
-        public string ReservationStatus { get; set; } = string.Empty;
+        public ReservationStatus ReservationStatus { get; set; } 
     }
 }
