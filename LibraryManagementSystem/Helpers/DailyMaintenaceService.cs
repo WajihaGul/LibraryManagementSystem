@@ -5,11 +5,11 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace LibraryManagementSystem.Helpers
 {
-    public class OverdueChecker:BackgroundService
+    public class DailyMaintenaceService:BackgroundService
     {
         private readonly IServiceProvider iServiceProvider;
 
-        public OverdueChecker(IServiceProvider iServiceProvider)
+        public DailyMaintenaceService(IServiceProvider iServiceProvider)
         {
             Console.WriteLine("[OverdueChecker] Constructor called!");   // ← add
 
@@ -26,6 +26,7 @@ namespace LibraryManagementSystem.Helpers
 
                 // do the overdue check
                 ProcessOverdueRecords();
+                ExpireReservations();
 
                 // wait 24 hours before running again
                 await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
@@ -69,6 +70,22 @@ namespace LibraryManagementSystem.Helpers
 
             
             if (overdueRecords.Any())
+                context.SaveChanges();
+        }
+
+        private void ExpireReservations()
+        {
+            using var scope = iServiceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+
+            var expiredReservations = context.Reservations
+                .Where(r => r.Status == ReservationStatus.Pending && r.ExpiresAt < DateTime.Now)
+                .ToList();
+
+            foreach (var reservation in expiredReservations)
+                reservation.Status = ReservationStatus.Expired;
+
+            if (expiredReservations.Any())
                 context.SaveChanges();
         }
     }

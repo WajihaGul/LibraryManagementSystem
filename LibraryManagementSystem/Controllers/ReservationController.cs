@@ -97,6 +97,7 @@ namespace LibraryManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Member")]
         [Route("{id:int}")]
         public IActionResult BookAReservations(int id)
         {

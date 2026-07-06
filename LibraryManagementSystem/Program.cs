@@ -40,7 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddHostedService<LibraryManagementSystem.Helpers.OverdueChecker>();
+builder.Services.AddHostedService<LibraryManagementSystem.Helpers.DailyMaintenaceService>();
 
 
 builder.Services.AddControllers()
