@@ -42,6 +42,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddHostedService<LibraryManagementSystem.Helpers.DailyMaintenaceService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -60,6 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 
