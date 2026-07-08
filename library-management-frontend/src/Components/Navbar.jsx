@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             Library Management System
@@ -22,31 +22,73 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to = "/login" className="nav-link active" aria-current="page" href="#">
+                <Link
+                  to="/"
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#"
+                >
                   Home
                 </Link>
               </li>
-              
-              <li className="nav-item">
-              <Link to = "/books" className="nav-link active" aria-current="page" href="#">
-                  Books
-              </Link>
-              </li>              
 
               <li className="nav-item">
-                <Link to = "/login" className="nav-link active" aria-current="page" href="#">
+                <Link
+                  to="/authors"
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#"
+                >
                   Authors
                 </Link>
               </li>
 
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link active dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Books
+                </a>
+                <ul className="dropdown-menu">
+  <li>
+    <Link to="/books" className="dropdown-item text-decoration-none">
+      View Books
+    </Link>
+  </li>
+  <li>
+    <Link to="/borrow" className="dropdown-item text-decoration-none">
+      Borrowed Books
+    </Link>
+  </li>
+  <li>
+    <Link to="/reserve" className="dropdown-item text-decoration-none">
+      Reserved Books
+    </Link>
+  </li>
+</ul>
+              </li>
               <li className="nav-item">
-                <Link to = "/login" className="nav-link active" aria-current="page" href="#">
+                <Link
+                  to="/fines"
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#"
+                >
                   Fines
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link to = "/login" className="nav-link active" aria-current="page" href="#">
+                <Link
+                  to="/login"
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#"
+                >
                   Login
                 </Link>
               </li>
@@ -67,5 +109,5 @@ export default function Navbar() {
         </div>
       </nav>
     </>
-  )
+  );
 }
