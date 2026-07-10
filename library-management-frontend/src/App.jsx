@@ -8,8 +8,9 @@ import Books from "./Components/Books.jsx";
 import BorrowedBooks from "./Components/BorrowedBooks.jsx";
 import ReservedBooks from "./Components/ReservedBooks.jsx";
 import Fines from "./Components/Fines.jsx";
-import Authors from "./Components/Authors.jsx";
 import Home from "./Components/Home.jsx";
+import ViewAuthors from "./Components/Author/ViewAuthors.jsx";
+import CreateAuthor from "./Components/Author/CreateAuthor.jsx";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/authors" element={<Authors />} />
+            <Route path="/authors" element={<ViewAuthors />} />
+            <Route path="/createAuthor" element={<CreateAuthor />} />
             <Route path="/register" element={<Register />} />
             <Route path="/books" element={<Books />} />
             <Route path="/borrow" element={<BorrowedBooks />} />
