@@ -1,11 +1,15 @@
 import { getAllAuthors } from "../../Services/AuthorService";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/UseAuth";
 
 export default function ViewAuthors() {
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const {user} = useAuth();
+  const isLibrarian = user?.role === "Librarian"
 
   useEffect(() => {
     const fetchAllAuthors = async () => {
@@ -67,11 +71,23 @@ export default function ViewAuthors() {
                     {a.books ? a.books.length : 0}
                   </span>
                 </td>
-                <td className="text-end">
-                  <button className="btn btn-outline-primary btn-sm">
-                    View Books
-                  </button>
-                </td>
+                
+                 <td className="text-end">
+      <Link to={`/authorBooks/${a.authorId}`} className="btn btn-outline-primary btn-sm">
+        View Books
+      </Link>
+
+      {isLibrarian && (
+        <>
+          <Link to={`/editAuthor/${a.authorId}`} className="btn btn-outline-secondary btn-sm ms-2">
+            Edit
+          </Link>
+          <Link to={`/deleteAuthor/${a.authorId}`} className="btn btn-outline-danger btn-sm ms-2">
+            Delete
+          </Link>
+        </>
+      )}
+    </td>
               </tr>
             ))}
           </tbody>

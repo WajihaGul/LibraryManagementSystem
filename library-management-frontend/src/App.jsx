@@ -11,6 +11,9 @@ import Fines from "./Components/Fines.jsx";
 import Home from "./Components/Home.jsx";
 import ViewAuthors from "./Components/Author/ViewAuthors.jsx";
 import CreateAuthor from "./Components/Author/CreateAuthor.jsx";
+import ViewBooksPerAuthor from "./Components/Author/ViewBooksPerAuthor.jsx";
+import EditAuthor from "./Components/Author/EditAuthor.jsx";
+import DeleteAuthor from "./Components/Author/DeleteAuthor.jsx";
 
 function App() {
   return (
@@ -22,8 +25,13 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+
             <Route path="/authors" element={<ViewAuthors />} />
             <Route path="/createAuthor" element={<CreateAuthor />} />
+            <Route path="/authorBooks/:id" element={<ViewBooksPerAuthor />} />
+            <Route path="/editAuthor/:id" element={<EditAuthor />} />
+            <Route path="/deleteAuthor/:id" element={<DeleteAuthor />} />
+
             <Route path="/register" element={<Register />} />
             <Route path="/books" element={<Books />} />
             <Route path="/borrow" element={<BorrowedBooks />} />
