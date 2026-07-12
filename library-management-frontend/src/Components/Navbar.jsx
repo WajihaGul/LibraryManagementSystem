@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/UseAuth";
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+  const isLibrarian = user?.role === "Librarian";
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -54,44 +58,74 @@ export default function Navbar() {
                   Books
                 </a>
                 <ul className="dropdown-menu">
-  <li>
-    <Link to="/books" className="dropdown-item text-decoration-none">
-      View Books
-    </Link>
-  </li>
-  <li>
-    <Link to="/borrow" className="dropdown-item text-decoration-none">
-      Borrowed Books
-    </Link>
-  </li>
-  <li>
-    <Link to="/reserve" className="dropdown-item text-decoration-none">
-      Reserved Books
-    </Link>
-  </li>
-</ul>
-              </li>
-              <li className="nav-item">
-                <Link
-                  to="/fines"
-                  className="nav-link active"
-                  aria-current="page"
-                  href="#"
-                >
-                  Fines
-                </Link>
+                  <li>
+                    <Link
+                      to="/books"
+                      className="dropdown-item text-decoration-none"
+                    >
+                      View Books
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/borrow"
+                      className="dropdown-item text-decoration-none"
+                    >
+                      Borrowed Books
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/reserve"
+                      className="dropdown-item text-decoration-none"
+                    >
+                      Reserved Books
+                    </Link>
+                  </li>
+                </ul>
               </li>
 
               <li className="nav-item">
-                <Link
-                  to="/login"
-                  className="nav-link active"
-                  aria-current="page"
-                  href="#"
-                >
-                  Login
-                </Link>
+                {isLibrarian ? (
+                  <Link
+                    to="/allFines"
+                    className="nav-link active"
+                    aria-current="page"
+                    href="#"
+                  >
+                    Fines
+                  </Link>
+                ) : (
+                  <Link
+                    to="/myFines"
+                    className="nav-link active"
+                    aria-current="page"
+                    href="#"
+                  >
+                    Fines
+                  </Link>
+                )}
               </li>
+
+              {user ? (
+                <li className="nav-item d-flex align-items-center">
+                  <span className="nav-link text-light">
+                    Hi, {user.userName}
+                  </span>
+                  <button
+                    className="btn btn-outline-light btn-sm ms-2"
+                    onClick={logout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link active">
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
 
             <form className="d-flex" role="search">

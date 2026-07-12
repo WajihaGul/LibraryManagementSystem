@@ -7,7 +7,9 @@ import Register from "./Components/Register.jsx";
 import Books from "./Components/Books.jsx";
 import BorrowedBooks from "./Components/BorrowedBooks.jsx";
 import ReservedBooks from "./Components/ReservedBooks.jsx";
-import Fines from "./Components/Fines.jsx";
+import ViewMyFines from "./Components/Fines/ViewMyFine.jsx";
+import ViewAllFines from "./Components/Fines/ViewAllFines.jsx";
+import PayFines from "./Components/Fines/PayFines.jsx";
 import Home from "./Components/Home.jsx";
 import ViewAuthors from "./Components/Author/ViewAuthors.jsx";
 import CreateAuthor from "./Components/Author/CreateAuthor.jsx";
@@ -17,7 +19,6 @@ import DeleteAuthor from "./Components/Author/DeleteAuthor.jsx";
 
 function App() {
   return (
-    
     <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
         <Navbar />
@@ -36,7 +37,10 @@ function App() {
             <Route path="/books" element={<Books />} />
             <Route path="/borrow" element={<BorrowedBooks />} />
             <Route path="/reserve" element={<ReservedBooks />} />
-            <Route path="/fines" element={<Fines />} />
+
+            <Route path="/allFines" element={<ViewAllFines/>} />
+            <Route path="/myFines" element={<ViewMyFines />} />
+            <Route path="/payFine/:id" element={<PayFines />} />
           </Routes>
         </main>
         <Footer />

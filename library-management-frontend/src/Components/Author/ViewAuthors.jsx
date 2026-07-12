@@ -1,5 +1,5 @@
 import { getAllAuthors } from "../../Services/AuthorService";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/UseAuth";
 
@@ -8,8 +8,8 @@ export default function ViewAuthors() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const {user} = useAuth();
-  const isLibrarian = user?.role === "Librarian"
+  const { user } = useAuth();
+  const isLibrarian = user?.role === "Librarian";
 
   useEffect(() => {
     const fetchAllAuthors = async () => {
@@ -43,8 +43,10 @@ export default function ViewAuthors() {
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="m-0">Authors</h1>
-        
-        <Link to="/createAuthor" className="btn btn-dark">+ Add Author</Link>
+
+        <Link to="/createAuthor" className="btn btn-dark">
+          + Add Author
+        </Link>
       </div>
 
       <div className="table-responsive shadow-sm rounded">
@@ -55,7 +57,9 @@ export default function ViewAuthors() {
               <th scope="col">Name</th>
               <th scope="col">Bio</th>
               <th scope="col">Books</th>
-              <th scope="col" className="text-end">Action</th>
+              <th scope="col" className="text-end">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -64,30 +68,41 @@ export default function ViewAuthors() {
                 <th scope="row">{a.authorId}</th>
                 <td>{a.authorName}</td>
                 <td className="text-muted">
-                  {a.authorBio || <span className="fst-italic">No bio available</span>}
+                  {a.authorBio || (
+                    <span className="fst-italic">No bio available</span>
+                  )}
                 </td>
                 <td>
                   <span className="badge bg-secondary">
                     {a.books ? a.books.length : 0}
                   </span>
                 </td>
-                
-                 <td className="text-end">
-      <Link to={`/authorBooks/${a.authorId}`} className="btn btn-outline-primary btn-sm">
-        View Books
-      </Link>
 
-      {isLibrarian && (
-        <>
-          <Link to={`/editAuthor/${a.authorId}`} className="btn btn-outline-secondary btn-sm ms-2">
-            Edit
-          </Link>
-          <Link to={`/deleteAuthor/${a.authorId}`} className="btn btn-outline-danger btn-sm ms-2">
-            Delete
-          </Link>
-        </>
-      )}
-    </td>
+                <td className="text-end">
+                  <Link
+                    to={`/authorBooks/${a.authorId}`}
+                    className="btn btn-outline-primary btn-sm"
+                  >
+                    View Books
+                  </Link>
+
+                  {isLibrarian && (
+                    <>
+                      <Link
+                        to={`/editAuthor/${a.authorId}`}
+                        className="btn btn-outline-secondary btn-sm ms-2"
+                      >
+                        Edit
+                      </Link>
+                      <Link
+                        to={`/deleteAuthor/${a.authorId}`}
+                        className="btn btn-outline-danger btn-sm ms-2"
+                      >
+                        Delete
+                      </Link>
+                    </>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
