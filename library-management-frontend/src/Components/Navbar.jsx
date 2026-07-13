@@ -75,12 +75,25 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to="/reserve"
-                      className="dropdown-item text-decoration-none"
-                    >
-                      Reserved Books
-                    </Link>
+                    {isLibrarian ? (
+                      <Link
+                        to="/viewAllReservations"
+                        className="nav-link active"
+                        aria-current="page"
+                        href="#"
+                      >
+                        Reservations
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/myReservations"
+                        className="nav-link active"
+                        aria-current="page"
+                        href="#"
+                      >
+                        Reservations
+                      </Link>
+                    )}
                   </li>
                 </ul>
               </li>

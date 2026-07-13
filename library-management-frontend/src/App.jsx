@@ -4,18 +4,20 @@ import Navbar from "./Components/Navbar.jsx";
 import Login from "./Components/Login.jsx";
 import Footer from "./Components/Footer.jsx";
 import Register from "./Components/Register.jsx";
-import Books from "./Components/Books.jsx";
+import ViewAllBooks from "./Components/Books/ViewAllBooks.jsx";
 import BorrowedBooks from "./Components/BorrowedBooks.jsx";
-import ReservedBooks from "./Components/ReservedBooks.jsx";
 import ViewMyFines from "./Components/Fines/ViewMyFine.jsx";
 import ViewAllFines from "./Components/Fines/ViewAllFines.jsx";
-import PayFines from "./Components/Fines/PayFines.jsx";
 import Home from "./Components/Home.jsx";
 import ViewAuthors from "./Components/Author/ViewAuthors.jsx";
 import CreateAuthor from "./Components/Author/CreateAuthor.jsx";
 import ViewBooksPerAuthor from "./Components/Author/ViewBooksPerAuthor.jsx";
 import EditAuthor from "./Components/Author/EditAuthor.jsx";
 import DeleteAuthor from "./Components/Author/DeleteAuthor.jsx";
+import ViewAllReservations from "./Components/Reservations/ViewAllReservations.jsx";
+import UpdateAReservation from "./Components/Reservations/UpdateAReservation.jsx";
+import ViewMyReservations from "./Components/Reservations/ViewMyReservations.jsx";
+// import BookAReservation from "./Components/Reservations/BookAReservation.jsx";
 
 function App() {
   return (
@@ -34,13 +36,20 @@ function App() {
             <Route path="/deleteAuthor/:id" element={<DeleteAuthor />} />
 
             <Route path="/register" element={<Register />} />
-            <Route path="/books" element={<Books />} />
+
+            <Route path="/books" element={<ViewAllBooks />} />
+            
+            
             <Route path="/borrow" element={<BorrowedBooks />} />
-            <Route path="/reserve" element={<ReservedBooks />} />
+
+            <Route path="/viewAllReservations" element={<ViewAllReservations />} />
+            <Route path="/updateReservation/:id" element={<UpdateAReservation />} />
+            <Route path="/myReservations" element={<ViewMyReservations />} />
+            {/* <Route path="/bookAReservation" element={<BookAReservation />} /> */}
 
             <Route path="/allFines" element={<ViewAllFines/>} />
             <Route path="/myFines" element={<ViewMyFines />} />
-            <Route path="/payFine/:id" element={<PayFines />} />
+
           </Routes>
         </main>
         <Footer />
