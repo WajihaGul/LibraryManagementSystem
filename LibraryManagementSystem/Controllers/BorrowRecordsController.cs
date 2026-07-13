@@ -47,6 +47,35 @@ namespace LibraryManagementSystem.Controllers
             return Ok(data);
         }
 
+        [HttpGet("myBorrowRecords")]
+        [Authorize(Roles = "Member")]
+        public IActionResult GetMyBorrowRecords()
+        {
+            var userID = GetLoggedInUserId();
+
+            var data = applicationDBContext.BorrowRecords
+                .Include(a => a.Book)
+                .Include(a => a.User)
+                .Include(a => a.FinePenalty)
+                .Where(a => a.UserID == userID)
+                .Select(a => new ViewBorrowRecordDTO
+                {
+                    BorrowID = a.BorrowID,
+                    BookID = a.BookID,
+                    BookTitle = a.Book.BookTitle,
+                    UserID = a.UserID,
+                    UserName = a.User.UserName,
+                    Status = a.Status,
+                    BorrowedAt = a.BorrowedAt,
+                    DueDate = a.DueDate,
+                    ReturnedAt = a.ReturnedAt,
+                    FinePenaltyAmount = a.FinePenalty != null ? a.FinePenalty.FineAmount : 0
+                }).ToList();
+
+            return Ok(data);
+        }
+        
+
         [HttpGet]
         [Route("{id:int}")]
         [Authorize(Roles = "Librarian")]
@@ -155,7 +184,6 @@ namespace LibraryManagementSystem.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        [Authorize(Roles = "Librarian")]
         public IActionResult UpdateBorrowerRecords(int id)
         {
             var data = applicationDBContext.BorrowRecords.Find(id);

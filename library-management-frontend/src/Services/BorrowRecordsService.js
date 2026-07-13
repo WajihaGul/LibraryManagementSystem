@@ -5,6 +5,11 @@ export const getAllBorrowRecords = async()=>{
     return response.data;
 };
 
+export const getMyBorrowRecords = async()=>{
+    const response = await(axiosInstance.get("/borrowrecords/myBorrowRecords"));
+    return response.data;
+};
+
 export const getBorrowRecordsByID = async(id)=>{
     const response = await(axiosInstance.get(`/borrowrecords/${id}`));
     return response.data;

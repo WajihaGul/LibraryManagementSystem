@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getMyReservations } from "../../Services/ReservationService";
 
-export default function ViewAllReservations() {
+export default function ViewMyReservations() {
   const [reservation, setReservation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,6 @@ export default function ViewAllReservations() {
         setReservation(response);
       } catch (err) {
         setError("Error " + err);
-        setLoading(false);
       } finally {
         setLoading(false);
       }
@@ -21,46 +20,82 @@ export default function ViewAllReservations() {
     fetchAllBookings();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading)
+    return (
+      <div className="container py-5 text-center">
+        <div className="spinner-border text-dark" role="status"></div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="container py-5">
+        <div className="alert alert-danger">{error}</div>
+      </div>
+    );
+
+  const statusColor = (status) => {
+    switch (status) {
+      case "Fulfilled":
+        return "bg-success";
+      case "Cancelled":
+        return "bg-secondary";
+      case "Expired":
+        return "bg-danger";
+      default:
+        return "bg-warning text-dark";
+    }
+  };
 
   return (
-    <>
-      <h1>All Reserved Books</h1>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">User</th>
-            <th scope="col">Book</th>
-            <th scope="col">Status</th>
-            <th scope="col">Reserved At</th>
-            <th scope="col">Expires At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            reservation.length > 0 &&
-            reservation.map((r) => (
-              <tr key={r.reservationId}>
-                <th scope="row">{r.reservationId}</th>
-                <td>{r.userName}</td>
-                <td>{r.bookTitle}</td>
-                <td>{r.reservationStatus}</td>
-                <td>
-                  {r.reservedAt
-                    ? new Date(r.reservedAt).toLocaleDateString()
-                    : "—"}
-                </td>
-                <td>
-                  {r.expiresAt
-                    ? new Date(r.expiresAt).toLocaleDateString()
-                    : "—"}
+    <div className="container py-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="m-0">My Reservations</h1>
+        <span className="badge bg-dark fs-6">
+          {reservation.length} Record{reservation.length === 1 ? "" : "s"}
+        </span>
+      </div>
+
+      <div className="table-responsive shadow-sm rounded">
+        <table className="table table-striped table-hover align-middle mb-0">
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Book</th>
+              <th scope="col">Status</th>
+              <th scope="col">Reserved On</th>
+              <th scope="col">Expires On</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservation.length > 0 ? (
+              reservation.map((r) => (
+                <tr key={r.reservationId}>
+                  <th scope="row">{r.reservationId}</th>
+                  <td>{r.bookTitle}</td>
+                  <td>
+                    <span className={`badge ${statusColor(r.reservationStatus)}`}>
+                      {r.reservationStatus}
+                    </span>
+                  </td>
+                  <td className="text-muted">
+                    {r.reservedAt ? new Date(r.reservedAt).toLocaleDateString() : "—"}
+                  </td>
+                  <td className="text-muted">
+                    {r.expiresAt ? new Date(r.expiresAt).toLocaleDateString() : "—"}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center text-muted py-4">
+                  No reservations found
                 </td>
               </tr>
-            ))}
-        </tbody>
-      </table>
-    </>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }

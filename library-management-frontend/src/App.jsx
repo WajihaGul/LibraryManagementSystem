@@ -5,7 +5,6 @@ import Login from "./Components/Login.jsx";
 import Footer from "./Components/Footer.jsx";
 import Register from "./Components/Register.jsx";
 import ViewAllBooks from "./Components/Books/ViewAllBooks.jsx";
-import BorrowedBooks from "./Components/BorrowedBooks.jsx";
 import ViewMyFines from "./Components/Fines/ViewMyFine.jsx";
 import ViewAllFines from "./Components/Fines/ViewAllFines.jsx";
 import Home from "./Components/Home.jsx";
@@ -17,7 +16,8 @@ import DeleteAuthor from "./Components/Author/DeleteAuthor.jsx";
 import ViewAllReservations from "./Components/Reservations/ViewAllReservations.jsx";
 import UpdateAReservation from "./Components/Reservations/UpdateAReservation.jsx";
 import ViewMyReservations from "./Components/Reservations/ViewMyReservations.jsx";
-// import BookAReservation from "./Components/Reservations/BookAReservation.jsx";
+import ViewAllBorrowedBooks from "./Components/BorrowRecords/ViewAllBorrowRecords.jsx";
+import ViewMyBorrowRecords from "./Components/BorrowRecords/ViewMyBorrowRecords.jsx";
 
 function App() {
   return (
@@ -40,12 +40,12 @@ function App() {
             <Route path="/books" element={<ViewAllBooks />} />
             
             
-            <Route path="/borrow" element={<BorrowedBooks />} />
+            <Route path="/allBorrowedRecords" element={<ViewAllBorrowedBooks />} />
+            <Route path="/myBorrowedRecords" element={<ViewMyBorrowRecords/>} />
 
             <Route path="/viewAllReservations" element={<ViewAllReservations />} />
             <Route path="/updateReservation/:id" element={<UpdateAReservation />} />
             <Route path="/myReservations" element={<ViewMyReservations />} />
-            {/* <Route path="/bookAReservation" element={<BookAReservation />} /> */}
 
             <Route path="/allFines" element={<ViewAllFines/>} />
             <Route path="/myFines" element={<ViewMyFines />} />
